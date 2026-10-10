@@ -171,7 +171,7 @@ if [[ $__fzf_git_fzf ]]; then
 else
   # Redefine this function to change the options
   _fzf_git_fzf() {
-    fzf --height 50% --tmux 90%,70% \
+    fzf --height 100% --tmux 100%,100% \
       --layout reverse --multi --min-height 20+ \
       --no-separator --header-border horizontal \
       --border-label-pos 2 \
