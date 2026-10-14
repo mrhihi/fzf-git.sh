@@ -4,12 +4,6 @@ function __fzf_git_sh
     # having to modify `$PATH`.
     set --function fzf_git_sh_path (realpath (status dirname))
 
-    if test "$argv" = list_bindings
-        SHELL=bash bash "$fzf_git_sh_path/fzf-git.sh" --run $argv
-        commandline -f repaint
-        return
-    end
-
     set --function result (SHELL=bash bash "$fzf_git_sh_path/fzf-git.sh" --run $argv | string join ' ')
 
     if status is-command-substitution && test -n "$result"
@@ -22,8 +16,8 @@ end
 
 set --local commands branches each_ref files hashes lreflogs remotes stashes tags worktrees
 
-bind -M default 'ctrl-g,?' '__fzf_git_sh list_bindings'
-bind -M insert  'ctrl-g,?' '__fzf_git_sh list_bindings'
+bind -M default 'ctrl-g,?' '__fzf_git_sh menu'
+bind -M insert  'ctrl-g,?' '__fzf_git_sh menu'
 
 for command in $commands
     set --function key (string sub --length=1 $command)

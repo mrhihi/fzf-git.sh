@@ -23,7 +23,7 @@ __fzf_git=$(dirname "$__fzf_git_tmux")/fzf-git.sh
 # Key, function, and description of each binding
 __fzf_git_bindings() {
   cat <<'EOF'
-? list_bindings to show this list
+? menu to pick from a menu
 f files for Files
 b branches for Branches
 t tags for Tags
@@ -65,25 +65,7 @@ __fzf_git_join() {
   done
 }
 
-__fzf_git_list_bindings() {
-  local prefix key k desc
-  prefix=$(tmux show-option -gv prefix)
-  key=$(__fzf_git_key)
-  echo
-  while read -r k _ desc; do
-    echo "  $prefix $key $k $desc"
-  done < <(__fzf_git_bindings)
-  echo
-  echo '  Press any key to close'
-  read -rsn1
-}
-
 if [[ $# -gt 0 ]]; then # Started by a key binding ------------------------------
-
-if [[ $1 == list_bindings ]]; then
-  __fzf_git_list_bindings
-  exit
-fi
 
 # Reported here instead of on installation, because a message has nowhere to
 # go while .tmux.conf is being processed
@@ -114,13 +96,8 @@ self_format=${self//#/##}
 tmux bind-key "$(__fzf_git_key)" switch-client -T fzf-git
 
 while read -r key type _; do
-  if [[ $key == '?' ]]; then
-    # The list of bindings is plain text, so a popup is enough
-    tmux bind-key -T fzf-git "$key" display-popup -E -w 60 -h 16 "bash $self $type"
-  else
-    # TMUX_PANE tells fzf which window to open the floating pane in, and this
-    # script which pane to send the result to. run-shell is backgrounded so
-    # that it does not block key processing for the client.
-    tmux bind-key -T fzf-git "$key" run-shell -b "TMUX_PANE=#{pane_id} bash $self_format $type"
-  fi
+  # TMUX_PANE tells fzf which window to open the floating pane in, and this
+  # script which pane to send the result to. run-shell is backgrounded so
+  # that it does not block key processing for the client.
+  tmux bind-key -T fzf-git "$key" run-shell -b "TMUX_PANE=#{pane_id} bash $self_format $type"
 done < <(__fzf_git_bindings)

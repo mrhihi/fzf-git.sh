@@ -30,7 +30,7 @@ Usage
 
 ### List of bindings
 
-* <kbd>CTRL-G</kbd><kbd>?</kbd> to show this list
+* <kbd>CTRL-G</kbd><kbd>?</kbd> to pick from a menu
 * <kbd>CTRL-G</kbd><kbd>CTRL-F</kbd> for **F**iles
 * <kbd>CTRL-G</kbd><kbd>CTRL-B</kbd> for **B**ranches
 * <kbd>CTRL-G</kbd><kbd>CTRL-T</kbd> for **T**ags
@@ -78,7 +78,7 @@ in the same directory.
 
 The keys are the same as above, with <kbd>PREFIX</kbd><kbd>g</kbd> in place of
 <kbd>CTRL-G</kbd>. So <kbd>PREFIX</kbd><kbd>g</kbd><kbd>f</kbd> is for Files,
-and <kbd>PREFIX</kbd><kbd>g</kbd><kbd>?</kbd> shows the list. Set
+and <kbd>PREFIX</kbd><kbd>g</kbd><kbd>?</kbd> opens the menu. Set
 `@fzf-git-key` to use a different key after the prefix key. The option is read
 when the bindings are created, so set it before `run-shell`.
 
@@ -158,4 +158,5 @@ Environment Variables
 | `FZF_GIT_CAT`           | Defines the preview command used for displaying the file | `bat --style=$BAT_STYLE --color=$FZF_GIT_COLOR` |
 | `FZF_GIT_COLOR`         | Set to `never` to suppress colors in the list            | `always`                                        |
 | `FZF_GIT_PAGER`         | Specifies the pager command for the preview window       | `$(git config --get core.pager)`                |
+| `FZF_GIT_DIFF`          | Initial diff tool: `delta`, `difftastic` or `git`        | `delta`, else `difftastic`, else `git`          |
 | `FZF_GIT_PREVIEW_COLOR` | Set to `never` to suppress colors in the preview window  | `always`                                        |
